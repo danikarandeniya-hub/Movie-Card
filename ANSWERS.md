@@ -29,25 +29,25 @@ onClick={() =>setFavourite(!favourite)}
 
 **2.1 (Explain)** What does it mean for an input to be controlled? Describe what happens from one key press to the new text appearing in the box.
 
-My answer:
+My answer:A controlled input binds its value to React state and updates it on every keystroke using onChange, keeping React as the single source of truth. Calling e.preventDefault() stops the browser's default form submission, which would otherwise reload the page and wipe out all state in memory
 
 
 
 **2.2 (Explain)** Why is watchlist.push(item) followed by setWatchlist(watchlist) a bug?
 
-My answer:
+My answer:Both WatchForm and WatchList need access to the same list. Keeping watchlist in their shared parent WatchlistPage allows the state and handler functions to be passed down to both components via props.
 
 
 
 **2.3 (Explain)** The heading shows how many movies are still to watch. Why does that number not need its own useState?
 
-My answer:
+My answer:That count is derived data that can be calculated directly from the watchlist state during each render. Giving it a separate useState is unnecessary and risks the count getting out of sync whenever items are added, toggled, or deleted.
 
 
 
 **2.4 (Explain)** Why do list items use key={item.id} and not the index?
 
-My answer:
+My answer:Array indices shift whenever items are deleted or reordered, which can confuse React about which item changed and cause UI or state bugs. A unique item.id stays permanently tied to that specific movie regardless of its position in the list.
 
 
 
