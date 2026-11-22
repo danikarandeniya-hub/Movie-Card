@@ -55,25 +55,25 @@ My answer:Array indices shift whenever items are deleted or reordered, which can
 
 **3.1 (Explain)** Why is the fetch inside useEffect and not written directly in the component body?
 
-My answer:
+My answer:Writing fetch directly in the component body runs the network request on every render, and calling setMovies triggers another render, creating an infinite loop of requests. Putting it inside useEffect separates the side effect from rendering so React controls when the request runs.
 
 
 
 **3.2 (Predict)** What is the difference between useEffect(fn), useEffect(fn, []) and useEffect(fn, [url])?
 
-My answer:
+My answer:useEffect(fn) runs after every single render, whereas useEffect(fn, []) runs only once when the component first mounts. useEffect(fn, [url]) runs on mount and re-runs whenever the url dependency changes.
 
 
 
 **3.3 (Explain)** fetch does not fail on a 404. What can go wrong if you forget to check res.ok?
 
-My answer:
+My answer:Because fetch does not throw an error on HTTP 404 or 500 statuses, the code will try to parse an HTML error page or invalid response as JSON. This either crashes res.json() or puts non-array data into movies, causing movies.map() to crash the UI.
 
 
 
 **3.4 (Explain)** What does the cleanup function (controller.abort()) do and why do we ignore AbortError?
 
-My answer:
+My answer:The cleanup function controller.abort() cancels an ongoing fetch request if the component unmounts before the data arrives. Aborting intentionally rejects the fetch promise with an AbortError, so ignoring it prevents showing a false error message or updating state on an unmounted component.
 
 
 

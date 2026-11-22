@@ -1,12 +1,47 @@
+import { useState, useEffect } from "react";
 import MovieCard from "./MovieCard.jsx";
-import { sampleMovies } from "../data.js";
 
 export default function MovieList() {
-  // TASK 3: stop using sampleMovies. Fetch "/movies.json" in a useEffect.
-  // Keep three pieces of state: movies, loading, error. Show "Loading..." and an error message.
-  // Abort the request in the cleanup function.
-  // TASK 4b: later, move all of that into your useFetch hook.
-  const movies = sampleMovies;
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function fetchMovies() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch("/movies.json", {
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to load movies (${response.status})`);
+        }
+
+        const data = await response.json();
+        setMovies(data);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchMovies();
+
+    return () => controller.abort();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="grid">
@@ -16,3 +51,4 @@ export default function MovieList() {
     </div>
   );
 }
+
