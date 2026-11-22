@@ -1,6 +1,6 @@
 # My answers: Movie Watchlist workshop
 
-Name: 
+Name: Danika Randeniya
 
 Answer each question in your own words, two or three sentences. Do not paste an AI answer. You may be asked to explain these in a viva.
 
@@ -8,19 +8,20 @@ Answer each question in your own words, two or three sentences. Do not paste an 
 
 **1.1 (Explain)** In your own words, why did the Favourite button do nothing while favourite was an ordinary variable?
 
-My answer:
+My answer:A regular veriable cannot trigger react to re-render the UI when changed. Local variables are reset back to "False" every time React re-run the component function.
 
 
 
 **1.2 (Predict)** There are three cards and you click Add favourite on the second one. Which cards change, and why?
 
-My answer:
+My answer:Only second card will change.React gives every movie card a separate state memory, so when we update a one it doesn't affect to other cards. 
 
 
 
 **1.3 (Fix)** A friend wrote onClick={setFavourite(true)} and gets "Too many re-renders". What is wrong and how do you fix it?
 
-My answer:
+My answer:when he writes the code he doesn't add " () => " this to his code. So that state update during rendering instead of on click. updating state creates a another render, which lead to a infinite loop.
+onClick={() =>setFavourite(!favourite)}
 
 
 

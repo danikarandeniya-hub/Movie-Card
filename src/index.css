@@ -29,3 +29,4 @@ input[type="text"], input:not([type]), input[type="search"] { flex: 1; padding: 
 .struck { text-decoration: line-through; color: var(--muted); }
 .error { color: #8a1c1c; }
 .search { margin-bottom: 1rem; }
+.done {background: #d9f5e3; color: #11663a; }
